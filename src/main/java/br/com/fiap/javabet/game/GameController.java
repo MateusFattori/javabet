@@ -29,6 +29,13 @@ public class GameController {
         this.userRepository = userRepository;
     }
 
+    @GetMapping("/")
+    public String getAllGames(Model model) {
+        List<Game> games = gameService.getAllGames();
+        model.addAttribute("games", games);
+        return "games"; // Mapeia para a view games.html
+    }
+
     @GetMapping("/games/{id}")
     public String getGameDetails(@PathVariable("id") Long id, Model model) {
         Game game = gameService.getGameById(id);
@@ -36,7 +43,7 @@ public class GameController {
         model.addAttribute("game", game);
         model.addAttribute("predictions", predictions);
         model.addAttribute("prediction", new Prediction());
-        return "game_details";
+        return "game_details"; // Mapeia para a view game_details.html
     }
 
     @PostMapping("/games/{id}/predict")
@@ -45,6 +52,4 @@ public class GameController {
         predictionService.savePrediction(prediction, gameId, user);
         return "redirect:/games/" + gameId;
     }
-
-
 }

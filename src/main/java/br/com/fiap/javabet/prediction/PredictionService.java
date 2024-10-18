@@ -24,7 +24,7 @@ public class PredictionService {
 
     public void savePrediction(Prediction prediction, Long gameId, User user) {
         var existingPrediction = predictionRepository.findByGameIdAndUserId(gameId, user.getId());
-        if(existingPrediction.isPresent()) {
+        if (existingPrediction.isPresent()) {
             log.info("Updating existing prediction");
             var existing = existingPrediction.get();
             existing.setPredictedHomeTeamScore(prediction.getPredictedHomeTeamScore());
@@ -38,6 +38,5 @@ public class PredictionService {
         prediction.setGame(gameService.getGameById(gameId));
         prediction.setUser(user);
         predictionRepository.save(prediction);
-
     }
 }
